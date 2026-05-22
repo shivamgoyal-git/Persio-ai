@@ -1,6 +1,8 @@
-# Persona.ai
+# Persio.ai
 
-Persona.ai is an innovative platform designed to help businesses and brands generate in-depth customer personas using AI. By simply inputting a few key details—like the brand name, product description, target market, and industry—users receive a detailed persona that captures their target audience's motivations, challenges, and preferences. Persona.ai is perfect for marketers, product managers, and entrepreneurs aiming to understand their audience better and drive strategic decisions with data-driven personas.
+[![Live Demo](https://img.shields.io/badge/demo-online-brightgreen.svg?style=for-the-badge&logo=netlify&logoColor=white&color=6366f1)](https://your-site-name.netlify.app)
+
+**Persio.ai** is an innovative platform designed to help businesses and brands generate in-depth customer personas using AI. By simply inputting a few key details—like the brand name, product description, target market, and industry—users receive a detailed persona that captures their target audience's motivations, challenges, and preferences. Persio.ai is perfect for marketers, product managers, and entrepreneurs aiming to understand their audience better and drive strategic decisions with data-driven personas.
 
 ### Features
 

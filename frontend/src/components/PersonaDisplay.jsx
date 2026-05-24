@@ -20,8 +20,9 @@ const PersonaDisplay = () => {
           navigate("/persona/details");
           throw new Error("Brand details not available");
         }
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4500";
         const request = {
-          url: "http://localhost:4500/persona",
+          url: `${apiBaseUrl}/persona`,
           method: "POST",
           data: {
             ...details,

@@ -19,8 +19,9 @@ export default function QueriesDisplay() {
 
         if (concerns?.length) return { success: true };
 
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4500";
         const request = {
-          url: "http://localhost:4500/concerns",
+          url: `${apiBaseUrl}/concerns`,
           method: "POST",
           data: { ...details, numResponse: 6 },
         };

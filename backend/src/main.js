@@ -8,7 +8,7 @@ const { generateBusinessPlan } = require("./utils/businessplan");
 const { generateMvp } = require("./utils/mvp");
 const { generateConcerns } = require("./utils/concerns");
 
-let production = false;
+let production = process.env.PRODUCTION === "true" || process.env.NODE_ENV === "production";
 
 const app = express();
 app.use(express.json());
@@ -161,6 +161,7 @@ app.post("/concerns", async (req, res) => {
   }
 })
 
-app.listen(4500, () => {
-  console.log("Server is running on port 4500");
+const PORT = process.env.PORT || 4500;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

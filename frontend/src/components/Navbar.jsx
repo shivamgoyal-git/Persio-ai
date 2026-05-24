@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/logo.png";
+import { useTheme } from "../context/ThemeContext";
+import logoLight from "../assets/logo-light.png";
+import logoDark from "../assets/logo-dark.png";
 
 function Navbar() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const { theme, toggleTheme } = useTheme();
 
   const links = [
     { to: "/product", label: "Product" },
@@ -13,23 +15,27 @@ function Navbar() {
   ];
 
   return (
-    <header className="fixed top-0 w-full z-50 flex justify-center pt-4">
-      <div className="w-11/12 max-w-5xl glass flex items-center justify-between px-6 py-3 rounded-2xl">
+    <header className="navbar">
+      <div className="navbar-inner">
         {/* Logo */}
-        <Link to="/" className="flex items-center justify-center h-14 w-52 overflow-hidden relative">
-          <img src={logo} alt="Persio" className="h-28 w-auto object-contain max-w-none scale-[1.7] translate-x-4" />
+        <Link to="/" className="flex items-center flex-shrink-0">
+          <img
+            src={theme === "dark" ? logoDark : logoLight}
+            alt="Persio"
+            style={{ height: '32px', width: 'auto', display: 'block' }}
+          />
         </Link>
 
         {/* Nav Links */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-1">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className={`text-sm font-medium transition-colors ${
+              className={`text-sm font-medium px-3 py-2 rounded-lg transition-colors ${
                 location.pathname === link.to
-                  ? 'text-indigo-400'
-                  : 'text-slate-400 hover:text-slate-100'
+                  ? "text-[var(--text-primary)] bg-[var(--surface-2)]"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-2)]"
               }`}
             >
               {link.label}
@@ -37,15 +43,40 @@ function Navbar() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <Link to="/persona/details">
-          <button className="btn-primary text-xs px-5 py-2.5">
-            Get Started
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
+        {/* Right Controls */}
+        <div className="flex items-center gap-2">
+          {/* Dark Mode Toggle */}
+          <button
+            id="theme-toggle"
+            onClick={toggleTheme}
+            className="btn-icon"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? (
+              /* Sun icon */
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+            ) : (
+              /* Moon icon */
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
           </button>
-        </Link>
+
+          {/* CTA */}
+          <Link to="/persona/details">
+            <button id="navbar-cta" className="btn-primary text-xs px-4 py-2">
+              Get Started
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </Link>
+        </div>
       </div>
     </header>
   );

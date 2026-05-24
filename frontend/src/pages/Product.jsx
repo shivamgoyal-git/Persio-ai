@@ -6,7 +6,7 @@ function Product() {
   const features = [
     {
       title: "AI-Powered Insights",
-      description: "Leverage advanced machine learning algorithms to generate data-driven insights into user behavior, preferences, and demographic patterns for informed decision-making.",
+      description: "Leverage advanced machine learning to generate data-driven insights into user behavior, preferences, and demographic patterns for informed decision-making.",
     },
     {
       title: "Customizable Personas",
@@ -14,7 +14,7 @@ function Product() {
     },
     {
       title: "Intuitive Interface",
-      description: "Experience our streamlined platform designed for efficiency, featuring drag-and-drop functionality, customizable templates, and real-time collaboration tools.",
+      description: "A streamlined platform designed for efficiency — from brand input to a full AI-generated persona report in under 10 seconds.",
     },
   ];
 
@@ -28,28 +28,31 @@ function Product() {
   ];
 
   return (
-    <div className="mesh-bg min-h-screen pt-28">
-      <div className="max-w-6xl mx-auto px-6 pb-24">
+    <div className="page-wrapper pb-20">
+      <div className="container-wide">
 
         {/* Header */}
         <div className="text-center mb-16">
           <div className="badge mb-6">Our Platform</div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-            Everything You Need to
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+              style={{ color: 'var(--text-primary)' }}>
+            Everything you need to
             <br />
-            <span className="gradient-text">Win Your Market</span>
+            <span style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>win your market</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Persona AI delivers cutting-edge persona generation tools powered by AI, helping businesses create deeper connections with their target audience.
+          <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            Persona AI delivers cutting-edge persona generation tools powered by AI, helping businesses
+            create deeper connections with their target audience.
           </p>
         </div>
 
-        {/* Feature Highlights Chips */}
-        <div className="flex flex-wrap gap-3 justify-center mb-16">
+        {/* Feature Chips */}
+        <div className="flex flex-wrap gap-2 justify-center mb-16">
           {highlights.map((h) => (
             <div
               key={h.label}
-              className="flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-medium text-slate-300"
+              className="badge"
+              style={{ fontSize: '12px', padding: '6px 14px' }}
             >
               <span>{h.icon}</span>
               {h.label}
@@ -60,22 +63,22 @@ function Product() {
         <div className="divider" />
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16">
           {features.map((feature, index) => (
             <FeatureCard key={index} title={feature.title} description={feature.description} />
           ))}
         </div>
 
         {/* CTA Banner */}
-        <div className="card-dark glow-indigo text-center py-16 px-8">
-          <h2 className="text-3xl font-bold mb-4 text-slate-100">
-            Ready to Understand Your Customers?
+        <div className="card text-center py-14 px-8">
+          <h2 className="text-2xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+            Ready to understand your customers?
           </h2>
-          <p className="text-slate-400 mb-8 max-w-md mx-auto">
+          <p className="mb-8 max-w-md mx-auto text-sm" style={{ color: 'var(--text-secondary)' }}>
             Join thousands of businesses already using Persona AI to drive smarter marketing decisions.
           </p>
           <Link to="/persona/details">
-            <button className="btn-primary px-10 py-4 text-base">
+            <button id="product-cta" className="btn-primary px-8 py-3 text-sm">
               Start For Free
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -83,6 +86,7 @@ function Product() {
             </button>
           </Link>
         </div>
+
       </div>
     </div>
   );

@@ -1,81 +1,76 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const stats = [
+  { value: "10K+", label: "Businesses served" },
+  { value: "98%",  label: "Accuracy rate" },
+  { value: "3s",   label: "Avg. generation" },
+];
 
 function HeroSection() {
   const navigate = useNavigate();
 
-  const handleGenerateClick = () => {
-    navigate('/persona/details');
-  };
-
-  const stats = [
-    { value: "10K+", label: "Businesses Served" },
-    { value: "98%", label: "Accuracy Rate" },
-    { value: "3 sec", label: "Avg. Generation Time" },
-  ];
-
   return (
-    <div className="mesh-bg relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24">
-      {/* Ambient glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-indigo-600/8 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-violet-600/8 blur-[100px] pointer-events-none" />
+    <div className="page-wrapper flex flex-col items-center justify-center pb-20" style={{ paddingTop: '8rem' }}>
+      <div className="container-narrow text-center animate-fade-up">
 
-      {/* Dot grid */}
-      <div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)',
-          backgroundSize: '36px 36px',
-          maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-        }}
-      />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         {/* Badge */}
         <div className="badge mb-8 animate-pulse-glow">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+          <span className="accent-dot" />
           AI-Powered Marketing Intelligence
         </div>
 
         {/* Headline */}
-        <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-5"
+            style={{ color: 'var(--text-primary)' }}>
           Know Your Customer
           <br />
-          <span className="gradient-text">Deeply & Instantly</span>
+          <span style={{ color: 'var(--text-secondary)', fontStyle: 'italic', fontWeight: 700 }}>
+            Deeply &amp; Instantly
+          </span>
         </h1>
 
-        {/* Subheadline */}
-        <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Generate rich, AI-powered customer personas, competitor insights, and strategic business plans in seconds — not weeks.
+        {/* Subheading */}
+        <p className="text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto"
+           style={{ color: 'var(--text-secondary)' }}>
+          Generate rich, AI-powered customer personas, competitor insights,
+          and strategic business plans in seconds — not weeks.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-          <button onClick={handleGenerateClick} className="btn-primary text-base px-8 py-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
+          <button
+            id="hero-cta-primary"
+            onClick={() => navigate('/persona/details')}
+            className="btn-primary px-7 py-3 text-sm"
+          >
             Generate Personas Free
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
           <button
-            className="btn-ghost text-base px-8 py-4"
+            id="hero-cta-secondary"
+            className="btn-secondary px-7 py-3 text-sm"
             onClick={() => navigate('/how-it-works')}
           >
             See How It Works
           </button>
         </div>
 
-        {/* Stats Row */}
+        {/* Divider */}
         <div className="divider" />
-        <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto">
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-6 max-w-sm mx-auto">
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-bold gradient-text mb-1">{stat.value}</div>
-              <div className="text-sm text-slate-500 font-medium">{stat.label}</div>
+            <div key={stat.label} className="stat-chip">
+              <span className="stat-value">{stat.value}</span>
+              <span className="stat-label">{stat.label}</span>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );

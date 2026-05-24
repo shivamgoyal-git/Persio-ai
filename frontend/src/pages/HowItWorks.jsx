@@ -46,41 +46,37 @@ function HowItWorks() {
   ];
 
   return (
-    <div className="mesh-bg min-h-screen pt-28">
-      <div className="max-w-4xl mx-auto px-6 pb-24">
+    <div className="page-wrapper pb-20">
+      <div className="container-narrow">
+
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-14">
           <div className="badge mb-6">How It Works</div>
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-            From Idea to Insights
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+              style={{ color: 'var(--text-primary)' }}>
+            From idea to insights
             <br />
-            <span className="gradient-text">in 4 Simple Steps</span>
+            <span style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>in 4 simple steps</span>
           </h1>
-          <p className="text-lg text-slate-400 max-w-xl mx-auto">
+          <p className="text-base max-w-md mx-auto" style={{ color: 'var(--text-secondary)' }}>
             Our AI-powered platform simplifies the process of creating detailed, accurate user personas for your business.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="flex flex-col gap-5 mb-16">
-          {steps.map((step, index) => (
-            <div key={step.number} className="card-dark flex items-start gap-6">
-              {/* Step number circle */}
+        <div className="flex flex-col gap-4 mb-14">
+          {steps.map((step) => (
+            <div key={step.number} className="card flex items-start gap-5">
               <div className="step-circle">{step.number}</div>
-
-              {/* Content */}
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="text-indigo-400">{step.icon}</div>
-                  <h3 className="text-lg font-semibold text-slate-100">{step.title}</h3>
+                <div className="flex items-center gap-2.5 mb-1.5">
+                  <span style={{ color: 'var(--text-muted)' }}>{step.icon}</span>
+                  <h3 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>{step.title}</h3>
                 </div>
-                <p className="text-slate-400 text-sm leading-relaxed">{step.description}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  {step.description}
+                </p>
               </div>
-
-              {/* Connector line */}
-              {index < steps.length - 1 && (
-                <div className="hidden" />
-              )}
             </div>
           ))}
         </div>
@@ -89,9 +85,11 @@ function HowItWorks() {
 
         {/* CTA */}
         <div className="text-center">
-          <p className="text-slate-400 mb-6 text-sm">Ready to get started? It's free, no sign-up required.</p>
+          <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+            Ready to get started? It's free, no sign-up required.
+          </p>
           <Link to="/persona/details">
-            <button className="btn-primary px-10 py-4 text-base">
+            <button id="how-it-works-cta" className="btn-primary px-8 py-3 text-sm">
               Try Persona AI Now
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -99,6 +97,7 @@ function HowItWorks() {
             </button>
           </Link>
         </div>
+
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const icons = {
   "AI-Powered Insights": (
@@ -20,17 +19,19 @@ const icons = {
 };
 
 const FeatureCard = ({ title, description }) => (
-  <div className="card-dark group">
-    {/* Icon bubble */}
-    <div className="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-5 group-hover:bg-indigo-500/15 transition-colors">
+  <div className="card group">
+    <div
+      className="icon-bubble w-10 h-10 rounded-lg mb-5 group-hover:bg-[var(--surface-2)] transition-colors"
+      style={{ color: 'var(--text-secondary)' }}
+    >
       {icons[title] ?? (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
         </svg>
       )}
     </div>
-    <h2 className="text-lg font-semibold text-slate-100 mb-2">{title}</h2>
-    <p className="text-slate-400 text-sm leading-relaxed">{description}</p>
+    <h2 className="text-base font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>{title}</h2>
+    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{description}</p>
   </div>
 );
 

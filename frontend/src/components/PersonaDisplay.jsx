@@ -36,7 +36,6 @@ const PersonaDisplay = () => {
         for (let i = 0; i < personas.length; i++) {
           const item = personas[i];
           let tempGender = item?.gender?.toLowerCase();
-
           const profileRes = await axios.get(
             `https://randomuser.me/api/?gender=${tempGender}`
           );
@@ -64,10 +63,12 @@ const PersonaDisplay = () => {
     return (
       <div className="flex flex-col items-center justify-center py-28 text-center">
         <div className="flex flex-col items-center gap-6">
-          <GridLoader color="#6366f1" size={15} />
+          <GridLoader color="var(--text-primary)" size={12} />
           <div>
-            <h2 className="text-xl font-bold text-slate-100 mb-2">Generating Persona Profiles...</h2>
-            <p className="text-sm text-slate-400 max-w-sm">
+            <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+              Generating Persona Profiles...
+            </h2>
+            <p className="text-sm max-w-sm" style={{ color: 'var(--text-secondary)' }}>
               Our AI is curating deeply rich demographic and behavioral user profiles based on your inputs.
             </p>
           </div>
@@ -77,30 +78,30 @@ const PersonaDisplay = () => {
   }
 
   const handleNavigation = (type) => {
-    if (type === "next") {
-      setNavIndex((prev) => prev + 1);
-    }
-    if (type === "back") {
-      setNavIndex((prev) => prev - 1);
-    }
+    if (type === "next") setNavIndex((prev) => prev + 1);
+    if (type === "back") setNavIndex((prev) => prev - 1);
   };
 
   return (
     personaQuery.status === "success" && currentPersona && (
-      <div className="flex flex-col gap-6">
-        
-        {/* Navigation / Progress Indicator */}
-        <div className="flex justify-between items-center bg-white/[0.02] border border-white/5 rounded-2xl px-6 py-4">
+      <div className="flex flex-col gap-5">
+
+        {/* Navigation Bar */}
+        <div className="card flex justify-between items-center" style={{ padding: '16px 24px' }}>
           <div className="flex items-center gap-2">
             {personas.map((_, idx) => (
               <div
                 key={idx}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  idx === navIndex ? "w-8 bg-indigo-500" : "w-2.5 bg-white/10"
-                }`}
+                style={{
+                  height: '6px',
+                  borderRadius: '999px',
+                  width: idx === navIndex ? '28px' : '6px',
+                  backgroundColor: idx === navIndex ? 'var(--text-primary)' : 'var(--border)',
+                  transition: 'all 0.3s ease',
+                }}
               />
             ))}
-            <span className="text-xs text-slate-400 font-semibold ml-2">
+            <span className="text-xs font-semibold ml-2" style={{ color: 'var(--text-muted)' }}>
               Profile {navIndex + 1} of {personas.length}
             </span>
           </div>
@@ -109,181 +110,190 @@ const PersonaDisplay = () => {
             <button
               onClick={() => handleNavigation("back")}
               disabled={navIndex === 0}
-              className={`p-2.5 rounded-xl border transition-all ${
-                navIndex === 0
-                  ? "border-white/5 text-slate-600 cursor-not-allowed"
-                  : "border-white/10 text-slate-300 hover:bg-white/[0.05]"
-              }`}
+              className="btn-icon"
+              style={{ opacity: navIndex === 0 ? 0.35 : 1 }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={() => handleNavigation("next")}
               disabled={navIndex === personas.length - 1}
-              className={`p-2.5 rounded-xl border transition-all ${
-                navIndex === personas.length - 1
-                  ? "border-white/5 text-slate-600 cursor-not-allowed"
-                  : "border-white/10 text-slate-300 hover:bg-white/[0.05]"
-              }`}
+              className="btn-icon"
+              style={{ opacity: navIndex === personas.length - 1 ? 0.35 : 1 }}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          {/* Column 1: Profile Summary */}
-          <div className="card-dark flex flex-col gap-6 h-fit">
-            <div className="flex items-center gap-4 border-b border-white/5 pb-6">
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+          {/* Profile Summary */}
+          <div className="card flex flex-col gap-5 h-fit">
+            <div className="flex items-center gap-4 pb-5" style={{ borderBottom: '1px solid var(--border)' }}>
               <img
                 src={currentPersona?.profile_pic}
                 alt={currentPersona?.name}
-                className="w-20 h-20 rounded-2xl object-cover border-2 border-indigo-500/30 glow-indigo"
+                style={{ width: '72px', height: '72px', borderRadius: '12px', objectFit: 'cover', border: '2px solid var(--border)' }}
               />
               <div>
-                <h2 className="text-xl font-bold text-slate-100">{currentPersona.name}</h2>
-                <p className="text-xs text-indigo-400 font-medium mt-1">{currentPersona?.occupation || "Profession"}</p>
+                <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+                  {currentPersona.name}
+                </h2>
+                <p className="text-xs font-medium mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                  {currentPersona?.occupation || "Profession"}
+                </p>
               </div>
             </div>
 
-            {/* Demographics Cardlets */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-0.5">Age</p>
-                <p className="text-sm font-semibold text-slate-200">{currentPersona?.age || "N/A"}</p>
+            {/* Demographics */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <div className="card-flat rounded-xl p-3">
+                <p className="text-[10px] uppercase tracking-wider font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>Age</p>
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{currentPersona?.age || "N/A"}</p>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-0.5">Location</p>
-                <p className="text-sm font-semibold text-slate-200 truncate">{currentPersona?.location || "N/A"}</p>
+              <div className="card-flat rounded-xl p-3">
+                <p className="text-[10px] uppercase tracking-wider font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>Location</p>
+                <p className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{currentPersona?.location || "N/A"}</p>
               </div>
-              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 col-span-2">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-0.5">Industry</p>
-                <p className="text-sm font-semibold text-slate-200">{currentPersona?.industry || "N/A"}</p>
+              <div className="card-flat rounded-xl p-3 col-span-2">
+                <p className="text-[10px] uppercase tracking-wider font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>Industry</p>
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{currentPersona?.industry || "N/A"}</p>
               </div>
             </div>
 
-            {/* Quick Details */}
-            <div className="flex flex-col gap-4 border-t border-white/5 pt-6 text-sm">
+            {/* Background Details */}
+            <div className="flex flex-col gap-4 pt-4 text-sm" style={{ borderTop: '1px solid var(--border)' }}>
               <div>
-                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider block mb-1">Education</span>
-                <p className="text-slate-300 font-medium leading-relaxed">{currentPersona?.background?.education || "N/A"}</p>
+                <span className="text-[10px] font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>Education</span>
+                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{currentPersona?.background?.education || "N/A"}</p>
               </div>
               <div>
-                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider block mb-1">Work Environment</span>
-                <p className="text-slate-300 font-medium leading-relaxed">{currentPersona?.background?.work_environment || "N/A"}</p>
+                <span className="text-[10px] font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>Work Environment</span>
+                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{currentPersona?.background?.work_environment || "N/A"}</p>
               </div>
               <div>
-                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider block mb-1">Income Bracket</span>
-                <p className="text-slate-300 font-medium leading-relaxed">{currentPersona?.background?.income || "N/A"}</p>
+                <span className="text-[10px] font-semibold uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>Income Bracket</span>
+                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{currentPersona?.background?.income || "N/A"}</p>
               </div>
             </div>
           </div>
 
-          {/* Column 2 & 3: Deep Behavioral Insights */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            
-            {/* Goals & Channels Card */}
-            <div className="card-dark grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Behavioral Insights */}
+          <div className="lg:col-span-2 flex flex-col gap-5">
+
+            {/* Goals & Channels */}
+            <div className="card grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-6 rounded-full bg-indigo-500" />
+                <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-primary)', display: 'inline-block' }} />
                   Core Goals & Objectives
                 </h3>
                 <div className="flex flex-col gap-3 text-sm">
-                  <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
-                    <p className="text-xs font-semibold text-indigo-400 mb-1">Primary Focus</p>
-                    <p className="text-slate-300 leading-relaxed">{currentPersona?.professional_goal?.primary_goal}</p>
+                  <div className="card-flat rounded-xl p-3.5">
+                    <p className="text-xs font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>Primary Focus</p>
+                    <p style={{ color: 'var(--text-secondary)' }} className="leading-relaxed">
+                      {currentPersona?.professional_goal?.primary_goal}
+                    </p>
                   </div>
                   {currentPersona?.professional_goal?.secondary_goal && (
-                    <div className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
-                      <p className="text-xs font-semibold text-slate-500 mb-1">Secondary Focus</p>
-                      <p className="text-slate-400 leading-relaxed">{currentPersona?.professional_goal?.secondary_goal}</p>
+                    <div className="card-flat rounded-xl p-3.5">
+                      <p className="text-xs font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>Secondary Focus</p>
+                      <p style={{ color: 'var(--text-secondary)' }} className="leading-relaxed">
+                        {currentPersona?.professional_goal?.secondary_goal}
+                      </p>
                     </div>
                   )}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-6 rounded-full bg-violet-500" />
+                <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-secondary)', display: 'inline-block' }} />
                   Communication Channels
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {currentPersona?.communication_channel?.map((channel, cid) => (
                     <span
                       key={cid}
-                      className="px-3.5 py-2 bg-indigo-500/10 border border-indigo-500/25 rounded-xl text-xs font-semibold text-indigo-300"
+                      className="badge"
+                      style={{ fontSize: '11px' }}
                     >
                       {channel}
                     </span>
                   ))}
                 </div>
 
-                <h3 className="text-base font-bold text-slate-100 mt-6 mb-3 flex items-center gap-2">
-                  <span className="w-1.5 h-6 rounded-full bg-emerald-500" />
+                <h3 className="text-sm font-bold mt-5 mb-2 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-muted)', display: 'inline-block' }} />
                   Personal Interests
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   {currentPersona?.hobbies?.personal_interests || "N/A"}
                 </p>
               </div>
             </div>
 
             {/* Pain Points */}
-            <div className="card-dark">
-              <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
-                <span className="w-1.5 h-6 rounded-full bg-rose-500" />
+            <div className="card">
+              <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-secondary)', display: 'inline-block' }} />
                 Pain Points & Obstacles
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {currentPersona?.pain_points?.map((point, index) => (
-                  <div key={index} className="bg-white/[0.02] border border-white/5 rounded-xl p-4">
-                    <span className="text-xs font-bold text-rose-400 block mb-1">
+                  <div key={index} className="card-flat rounded-xl p-3.5">
+                    <span className="text-xs font-bold block mb-1" style={{ color: 'var(--text-primary)' }}>
                       {index + 1}. {point?.title}
                     </span>
-                    <p className="text-slate-400 text-xs leading-relaxed">{point?.description}</p>
+                    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      {point?.description}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Product Usecase & Preferred Features */}
-            <div className="card-dark grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Use Cases & Features */}
+            <div className="card grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-6 rounded-full bg-indigo-500" />
+                <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-primary)', display: 'inline-block' }} />
                   Why they'll use {details?.brandName}?
                 </h3>
                 <div className="flex flex-col gap-3">
                   {currentPersona?.usecase_product?.map((point, index) => (
                     <div key={index} className="text-sm">
-                      <p className="font-semibold text-slate-200 mb-0.5">
+                      <p className="font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>
                         {index + 1}. {point?.title}
                       </p>
-                      <p className="text-slate-450 text-xs leading-relaxed">{point?.description}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {point?.description}
+                      </p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-base font-bold text-slate-100 mb-4 flex items-center gap-2">
-                  <span className="w-1.5 h-6 rounded-full bg-violet-500" />
+                <h3 className="text-sm font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span style={{ width: '3px', height: '18px', borderRadius: '999px', backgroundColor: 'var(--text-secondary)', display: 'inline-block' }} />
                   Key Features They'll Value
                 </h3>
                 <div className="flex flex-col gap-3">
                   {currentPersona?.features_needed?.map((point, index) => (
                     <div key={index} className="text-sm">
-                      <p className="font-semibold text-slate-200 mb-0.5">
+                      <p className="font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>
                         {index + 1}. {point?.feature}
                       </p>
-                      <p className="text-slate-450 text-xs leading-relaxed">{point?.description}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {point?.description}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -291,7 +301,6 @@ const PersonaDisplay = () => {
             </div>
 
           </div>
-
         </div>
 
       </div>

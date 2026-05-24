@@ -14,23 +14,39 @@ const industries = [
 function BusinessTypeOption({ value, label, sublabel, checked, onChange }) {
   return (
     <label
-      className={`flex items-center gap-4 px-5 py-4 rounded-xl border cursor-pointer transition-all duration-200 ${
-        checked
-          ? 'border-indigo-500/60 bg-indigo-500/10'
-          : 'border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.05]'
-      }`}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '1rem',
+        padding: '14px 18px',
+        borderRadius: '12px',
+        border: checked ? '1.5px solid var(--text-secondary)' : '1px solid var(--border)',
+        backgroundColor: checked ? 'var(--surface-2)' : 'var(--surface)',
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
+      }}
     >
       <div
-        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-          checked ? 'border-indigo-400' : 'border-slate-600'
-        }`}
+        style={{
+          width: '16px',
+          height: '16px',
+          borderRadius: '50%',
+          border: checked ? '2px solid var(--text-primary)' : '2px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          transition: 'all 0.15s ease',
+        }}
       >
-        {checked && <div className="w-2 h-2 rounded-full bg-indigo-400" />}
+        {checked && (
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--text-primary)' }} />
+        )}
       </div>
       <input type="checkbox" className="hidden" checked={checked} onChange={onChange} readOnly />
       <div>
-        <p className="text-sm font-semibold text-slate-200">{label}</p>
-        <p className="text-xs text-slate-500 mt-0.5">{sublabel}</p>
+        <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '2px' }}>{label}</p>
+        <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{sublabel}</p>
       </div>
     </label>
   );
@@ -56,28 +72,29 @@ export default function BusinessDetails() {
   };
 
   return (
-    <div className="mesh-bg min-h-screen flex items-start justify-center pt-28 pb-20">
+    <div className="page-wrapper" style={{ paddingTop: '6rem', paddingBottom: '5rem' }}>
       <div className="w-full max-w-2xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-10">
           <div className="badge mb-5">Step 1 of 1</div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4"
+              style={{ color: 'var(--text-primary)' }}>
             Tell Us About
             <br />
-            <span className="gradient-text">Your Business</span>
+            <span style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>Your Business</span>
           </h1>
-          <p className="text-slate-400 text-base">
+          <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
             These details power the AI to craft deeply tailored personas for your audience.
           </p>
         </div>
 
         {/* Form Card */}
-        <form onSubmit={handleSubmit} className="card-dark flex flex-col gap-6">
+        <form onSubmit={handleSubmit} className="card flex flex-col gap-6">
 
           {/* Brand Name */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">
-              Brand Name <span className="text-indigo-400">*</span>
+            <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>
+              Brand Name <span style={{ color: 'var(--text-primary)' }}>*</span>
             </label>
             <input
               type="text"
@@ -90,8 +107,8 @@ export default function BusinessDetails() {
 
           {/* Product Description */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">
-              Product Description <span className="text-indigo-400">*</span>
+            <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>
+              Product Description <span style={{ color: 'var(--text-primary)' }}>*</span>
             </label>
             <textarea
               required
@@ -104,17 +121,16 @@ export default function BusinessDetails() {
 
           {/* Industry */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-2">
-              Industry <span className="text-indigo-400">*</span>
+            <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>
+              Industry <span style={{ color: 'var(--text-primary)' }}>*</span>
             </label>
             <select
               value={details.industry}
               onChange={(e) => setDetails({ ...details, industry: e.target.value })}
               className="input-dark"
-              style={{ color: 'var(--color-text-primary)' }}
             >
               {industries.map((industry) => (
-                <option key={industry} value={industry} style={{ background: '#0c1228', color: '#f0f4ff' }}>
+                <option key={industry} value={industry}>
                   {industry}
                 </option>
               ))}
@@ -123,8 +139,8 @@ export default function BusinessDetails() {
 
           {/* Business Type */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-3">
-              Business Type <span className="text-indigo-400">*</span>
+            <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
+              Business Type <span style={{ color: 'var(--text-primary)' }}>*</span>
             </label>
             <div className="flex flex-col gap-3">
               <BusinessTypeOption
@@ -153,7 +169,7 @@ export default function BusinessDetails() {
 
           {/* Feature Availability */}
           <div>
-            <label className="block text-sm font-semibold text-slate-300 mb-3">
+            <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
               Have you built any features or prototypes?
             </label>
             <div className="flex gap-3">
